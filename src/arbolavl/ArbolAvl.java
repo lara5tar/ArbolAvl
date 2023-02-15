@@ -56,18 +56,14 @@ public class ArbolAvl {
     
     int altura (Nodo nodo){
         if(nodo != null){
-            int izq = 0, der = 0;
-            izq = altura(nodo.izq);
-            der = altura(nodo.der);
-            
+            int izq = altura(nodo.izq);
+            int der = altura(nodo.der);
             if(nodo.izq != null) izq = nodo.izq.altura;
             if(nodo.der != null) der = nodo.der.altura;
             nodo.altura = Integer.max(izq, der) + 1;
             return nodo.altura;
-        } else {
-            return 0;
         }
-        
+        return 0;
     }
 }
 
@@ -96,19 +92,6 @@ int alto = 0;
                     alto = Integer.max(nodo.izq.altura, nodo.der.altura) + 1;
             }
             nodo.altura = alto;
-
-<<<<<<< patch-1
-    int altura(nodo n) {
-        if(n!=null) //soy hijo
-        {
-            return n.altura;
-        }else return 0; //tengo altura 0 porque no soy hijo valido
-=======
-    void altura() {
-        altura1(raiz);
->>>>>>> master
-    }
-
 
 
  */
