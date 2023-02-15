@@ -25,8 +25,8 @@ public class ArbolAvl {
         }
         
         
-        int altura_der = altura(aux.der);
-        int altura_izq = altura(aux.izq);
+        //int altura_der = altura(aux.der);
+        //int altura_izq = altura(aux.izq);
         
         //aux.altura = max(altura_der,altura_izq) //completa esto ^_- creo en java hay una funcion max checala
         
@@ -72,18 +72,16 @@ public class ArbolAvl {
     void altura(){
         altura(raiz);
     }
-
-
-    int altura (Nodo nodo){
+    
+    void altura (Nodo nodo){
         if(nodo != null){
-            int izq = altura(nodo.izq);
-            int der = altura(nodo.der);
+            int izq = 0, der = 0;
+            altura(nodo.izq);
+            altura(nodo.der);
             if(nodo.izq != null) izq = nodo.izq.altura;
             if(nodo.der != null) der = nodo.der.altura;
             nodo.altura = Integer.max(izq, der) + 1;
-            return nodo.altura;
         }
-        return 0;
     }
 }
 
