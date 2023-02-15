@@ -23,6 +23,16 @@ public class ArbolAvl {
         } else {
             aux.der = insertarBin(aux.der, num);
         }
+        
+        
+        int altura_der = altura(aux.der);
+        int altura_izq = altura(aux.izq);
+        
+        aux.altura = max(altura_der,altura_izq) //completa esto ^_- creo en java hay una funcion max checala
+        
+        //ya con esto cada nodo retornado es por donde navegaste, entonces conforme regresa
+            // pues va calculando la altura para cada uno checale y me dices
+        
         return aux;
     }
 
@@ -50,8 +60,11 @@ public class ArbolAvl {
 
     }
 
-    void altura() {
-        altura(raiz);
+    int altura(nodo n) {
+        if(n!=null) //soy hijo
+        {
+            return n.altura;
+        }else return 0; //tengo altura 0 porque no soy hijo valido
     }
 
     void altura(Nodo nodo) {
