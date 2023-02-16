@@ -16,17 +16,20 @@ public class ArbolAvl {
     }
 
     Nodo insertarBin(Nodo aux, int num) {
-        if (aux == null) {
+        if (aux == null) { // cuando es null se inserta
             return new Nodo(num);
-        } else if (num < aux.num) {
+        } else if (num < aux.num) { //num es menor que el nodo, a la izq
             aux.izq = insertarBin(aux.izq, num);
-        } else {
+        } else {//num es mayor, a la derecha
             aux.der = insertarBin(aux.der, num);
         }
         
+        int izq = altura(aux.izq);
+        int der = altura(aux.der);
         
-        //int altura_der = altura(aux.der);
-        //int altura_izq = altura(aux.izq);
+        if(izq - der < -1){
+            System.out.println("carga a la derecha");
+        }
         
         //aux.altura = max(altura_der,altura_izq) //completa esto ^_- creo en java hay una funcion max checala
         
@@ -59,15 +62,6 @@ public class ArbolAvl {
         System.out.println("");
 
     }
-/*
-    
-    int altura(nodo n) {
-        if(n!=null) //soy hijo
-        {
-            return n.altura;
-        }else return 0; //tengo altura 0 porque no soy hijo valido
-    }
-    */
     
     void altura(){
         System.out.println(altura(raiz));
@@ -77,10 +71,9 @@ public class ArbolAvl {
         if(nodo != null){
             int izq = altura(nodo.izq);
             int der = altura(nodo.der);
-            
             int mayor = Integer.max(izq, der);
             nodo.altura = mayor + 1;
-            return nodo.altura;
+            return nodo.altura; 
         } else {
             return 0;
         }
