@@ -27,10 +27,10 @@ public class ArbolAvl {
         int izq = altura(aux.izq);
         int der = altura(aux.der);
         
-        if(izq - der < -1){ //carga a la derecha -2
+        if(izq - der < -1){ //carga a la derecha -2 o menos
             aux = rotacionIzq(aux, altura(aux.der.izq), altura(aux.der.der));
         }
-        if(izq - der > 1){ // carga a la izquierda 2
+        if(izq - der > 1){ // carga a la izquierda 2 o mas
             aux = rotacionDer(aux, altura(aux.izq.izq), altura(aux.izq.der));
         }
         
