@@ -14,75 +14,47 @@ public class ArbolAvl {
 
     Nodo insertarBin(Nodo aux, int num) {
         if (aux == null) return new Nodo(num);
-        
         else if (num < aux.num) aux.izq = insertarBin(aux.izq, num);
-        
         else aux.der = insertarBin(aux.der, num);
         
-        int izq = altura(aux.izq);
-        int der = altura(aux.der);
-        
-        //carga a la derecha -2 o menos
-        if(izq - der < -1) aux = rotacionIzq(aux, altura(aux.der.izq), altura(aux.der.der));
-        
-        // carga a la izquierda 2 o mas
-        if(izq - der > 1) aux = rotacionDer(aux, altura(aux.izq.izq), altura(aux.izq.der));
-        
+        altura(aux);
+        int factor = aux.factor();
+        if(factor < -1) aux = rotacionIzq(aux, aux.der.factor());
+        if(factor >  1) aux = rotacionDer(aux, aux.izq.factor());
         return aux;
     }
     
-    Nodo rotacionIzq(Nodo nodo, int izq, int der){
-        int factor = izq - der;
-        if(factor > 0) nodo.der = rotacionDer(nodo.der, 0, 0);
-        
+    Nodo rotacionIzq(Nodo nodo, int factor){
+        if(factor > 0) nodo.der = rotacionDer(nodo.der, 0);
         Nodo medio = nodo.der;
         nodo.der = medio.izq;
         medio.izq = nodo;
-        
         return medio;
     }
     
-    Nodo rotacionDer(Nodo nodo, int izq, int der){
-        int factor = izq - der;
-        if(factor < 0) nodo.izq = rotacionIzq(nodo.izq, 0, 0);
-        
+    Nodo rotacionDer(Nodo nodo, int factor){
+        if(factor < 0) nodo.izq = rotacionIzq(nodo.izq, 0);
         Nodo medio = nodo.izq;
         nodo.izq = medio.der;
         medio.der = nodo;
-        
         return medio;
     }
 
     void imprimir() {
         Queue<Nodo> cola = new LinkedList<Nodo>();
-
         if (raiz != null) {
             cola.add(raiz);
-
             while (!cola.isEmpty()) {
                 if (cola.element().izq != null) cola.add(cola.element().izq);
-
                 if (cola.element().der != null) cola.add(cola.element().der);
-                
-                System.out.print("[" + cola.element().num + " " + cola.poll().altura + "]");
+                System.out.print("[" + cola.element().num + " - " + cola.poll().altura + "]");
             }
         }
-
         System.out.println("");
-
     }
     
-    void altura(){
-        System.out.println(altura(raiz));
-    }
-    
-    int altura (Nodo nodo){
-        if(nodo != null){
-            int izq = altura(nodo.izq);
-            int der = altura(nodo.der);
-            int mayor = Integer.max(izq, der) + 1;
-            return nodo.altura = mayor; 
-        } else  return 0;
-        
+    int altura (Nodo n){
+        if(n != null) return n.altura = Integer.max(altura(n.izq), altura(n.der)) + 1;
+        else  return 0;
     }
 }
