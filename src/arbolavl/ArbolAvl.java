@@ -11,32 +11,52 @@ public class ArbolAvl {
         if (raiz == null) {
             raiz = new Nodo(num);
         } else {
-            insertarBin(raiz, num);
+            raiz = insertarBin(raiz, num);
         }
     }
 
     Nodo insertarBin(Nodo aux, int num) {
-        if (aux == null) { // cuando es null se inserta
+        if (aux == null) {
             return new Nodo(num);
-        } else if (num < aux.num) { //num es menor que el nodo, a la izq
+        } else if (num < aux.num) {
             aux.izq = insertarBin(aux.izq, num);
-        } else {//num es mayor, a la derecha
+        } else {
             aux.der = insertarBin(aux.der, num);
         }
         
         int izq = altura(aux.izq);
         int der = altura(aux.der);
         
-        if(izq - der < -1){
-            System.out.println("carga a la derecha");
+        if(izq - der < -1){ //carga a la derecha -2
+            aux = rotacionIzq(aux, altura(aux.der.izq), altura(aux.der.der));
+        }
+        if(izq - der > 1){ // carga a la izquierda 2
+            aux = rotacionDer(aux, altura(aux.izq.izq), altura(aux.izq.der));
         }
         
-        //aux.altura = max(altura_der,altura_izq) //completa esto ^_- creo en java hay una funcion max checala
-        
-        //ya con esto cada nodo retornado es por donde navegaste, entonces conforme regresa
-            // pues va calculando la altura para cada uno checale y me dices
-        
         return aux;
+    }
+    
+    Nodo rotacionIzq(Nodo nodo, int izq, int der){
+        int factor = izq - der;
+        if(factor > 0) nodo.der = rotacionDer(nodo.der, 0, 0);
+        
+        Nodo medio = nodo.der;
+        nodo.der = medio.izq;
+        medio.izq = nodo;
+        
+        return medio;
+    }
+    
+    Nodo rotacionDer(Nodo nodo, int izq, int der){
+        int factor = izq - der;
+        if(factor < 0) nodo.izq = rotacionIzq(nodo.izq, 0, 0);
+        
+        Nodo medio = nodo.izq;
+        nodo.izq = medio.der;
+        medio.der = nodo;
+        
+        return medio;
     }
 
     void imprimir() {
